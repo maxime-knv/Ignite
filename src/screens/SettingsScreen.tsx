@@ -9,7 +9,7 @@ import { ToggleRow } from '../components/ToggleRow';
 import { Colors, Radius, Spacing, Typography } from '../theme';
 import * as Notifications from 'expo-notifications';
 
-const HOURS = Array.from({ length: 10 }, (_, i) => i + 15); // 15h → 24h
+const HOURS = Array.from({ length: 7 }, (_, i) => i + 15); // 15h → 23h
 
 export const SettingsScreen: React.FC = () => {
   const {

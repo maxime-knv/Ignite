@@ -16,6 +16,15 @@ export interface DayLog {
   tasksDone: number;
 }
 
+export interface Friend {
+  id: string;
+  name: string;
+  link?: string;
+  currentStreak: number;
+  bestStreak: number;
+  dayLogs: DayLog[];
+}
+
 export interface AppState {
   hasOnboarded: boolean;
   setHasOnboarded: (v: boolean) => void;
@@ -48,6 +57,11 @@ export interface AppState {
 
   pomodoroCount: number;
   incrementPomodoro: () => void;
+
+  friends: Friend[];
+  addFriend: (name: string, link?: string) => void;
+  removeFriend: (id: string) => void;
+  updateFriendStreak: (id: string, currentStreak: number, bestStreak: number, dayLogs: DayLog[]) => void;
 }
 
 const getTodayStr = () => new Date().toISOString().split('T')[0];
@@ -152,6 +166,27 @@ export const useStore = create<AppState>()(
 
       pomodoroCount: 0,
       incrementPomodoro: () => set(s => ({ pomodoroCount: s.pomodoroCount + 1 })),
+
+      friends: [],
+      addFriend: (name, link) => {
+        const friend: Friend = {
+          id: Date.now().toString(),
+          name: name.trim(),
+          link: link?.trim(),
+          currentStreak: 0,
+          bestStreak: 0,
+          dayLogs: [],
+        };
+        set(s => ({ friends: [...s.friends, friend] }));
+      },
+      removeFriend: (id) => set(s => ({ friends: s.friends.filter(f => f.id !== id) })),
+      updateFriendStreak: (id, currentStreak, bestStreak, dayLogs) => {
+        set(s => ({
+          friends: s.friends.map(f =>
+            f.id === id ? { ...f, currentStreak, bestStreak, dayLogs } : f
+          ),
+        }));
+      },
     }),
     { name: 'ignite-store', storage: createJSONStorage(() => AsyncStorage) }
   )

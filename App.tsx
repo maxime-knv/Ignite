@@ -9,6 +9,7 @@ import * as Notifications from 'expo-notifications';
 import { TodayScreen } from './src/screens/TodayScreen';
 import { FocusScreen } from './src/screens/FocusScreen';
 import { StreakScreen } from './src/screens/StreakScreen';
+import { FriendsScreen } from './src/screens/FriendsScreen';
 import { SettingsScreen } from './src/screens/SettingsScreen';
 import { LoginScreen } from './src/screens/LoginScreen';
 import { useStore } from './src/store/useStore';
@@ -112,6 +113,15 @@ export default function App() {
             options={{
               tabBarIcon: ({ focused }) => (
                 <TabIcon emoji="🔥" label="Flamme" focused={focused} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Friends"
+            component={FriendsScreen}
+            options={{
+              tabBarIcon: ({ focused }) => (
+                <TabIcon emoji="👥" label="Amis" focused={focused} />
               ),
             }}
           />
