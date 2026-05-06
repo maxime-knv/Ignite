@@ -1,25 +1,3 @@
-/**
- * FocusScreen — Pomodoro timer that survives background / phone lock on iOS.
- *
- * Strategy
- * ────────
- * • We never rely on setInterval to *count* time.  Instead we store an
- *   `endTime` (epoch ms) in AsyncStorage the moment the timer starts.
- * • A setInterval fires every 500ms only to *read* remaining = endTime – now.
- *   If the app was backgrounded for 5 minutes, on next foreground the read
- *   gives the correct remaining time instantly.
- * • When the timer starts we schedule ONE local notification at `endTime`.
- *   iOS fires it even if the app is killed.
- * • When paused, we cancel the scheduled notification and save `remaining` ms.
- * • On app foreground (AppState → 'active') we re-sync from AsyncStorage.
- *
- * Interactive notification
- * ────────────────────────
- * iOS 16+ supports notification categories with action buttons.
- * We register a "POMODORO" category with "Skip break" and "Stop" actions.
- * expo-notifications handles the tap via the notification response listener.
- */
-
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   View, Text, TouchableOpacity, StyleSheet,
