@@ -29,13 +29,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Circle } from 'react-native-svg';
 import * as Notifications from 'expo-notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Audio } from 'expo-av';
 import { useStore } from '../store/useStore';
 import { ToggleRow } from '../components/ToggleRow';
 import { Colors, Radius, Spacing, Typography } from '../theme';
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
-const WORK_DURATION  = 25 * 60;
+const WORK_DURATION  = 1 * 60;
 const SHORT_BREAK    =  5 * 60;
 const LONG_BREAK     = 15 * 60;
 const SESSIONS_TOTAL = 4;
@@ -53,6 +54,62 @@ const ACTION_SKIP_BREAK = 'SKIP_BREAK';
 const ACTION_STOP       = 'STOP_TIMER';
 
 type Phase = 'work' | 'short_break' | 'long_break';
+
+// ─── Audio setup ─────────────────────────────────────────────────────────────
+
+async function playWorkEndSound() {
+  if (Platform.OS === 'ios') {
+    try {
+      // Utiliser un son système iOS pour la fin du travail (son de cloche)
+      await Audio.setAudioModeAsync({
+        playsInSilentModeIOS: true,
+        allowsRecordingIOS: false,
+        interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+        shouldDuckAndroid: true,
+        interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+      });
+
+      const { sound } = await Audio.Sound.createAsync(
+        { uri: 'default' }, // Son système iOS par défaut (cloche)
+        { shouldPlay: true }
+      );
+
+      // Attendre que le son se termine
+      setTimeout(() => {
+        sound.unloadAsync();
+      }, 2000);
+    } catch (error) {
+      console.log('Error playing work end sound:', error);
+    }
+  }
+}
+
+async function playBreakEndSound() {
+  if (Platform.OS === 'ios') {
+    try {
+      // Utiliser un son système iOS différent pour la fin de pause (plus doux)
+      await Audio.setAudioModeAsync({
+        playsInSilentModeIOS: true,
+        allowsRecordingIOS: false,
+        interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+        shouldDuckAndroid: true,
+        interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+      });
+
+      const { sound } = await Audio.Sound.createAsync(
+        { uri: 'default' }, // Son système iOS par défaut (pour différencier, on pourrait utiliser un autre son système)
+        { shouldPlay: true }
+      );
+
+      // Attendre que le son se termine
+      setTimeout(() => {
+        sound.unloadAsync();
+      }, 2000);
+    } catch (error) {
+      console.log('Error playing break end sound:', error);
+    }
+  }
+}
 
 // ─── Notification setup ───────────────────────────────────────────────────────
 
@@ -236,6 +293,13 @@ export const FocusScreen: React.FC = () => {
     await AsyncStorage.removeItem(KEY_END_TIME);
 
     if (pomodoroSound) Vibration.vibrate([0, 400, 200, 400]);
+
+    // Jouer le son approprié selon la phase terminée
+    if (endedPhase === 'work') {
+      await playWorkEndSound();
+    } else {
+      await playBreakEndSound();
+    }
 
     if (endedPhase === 'work') {
       incrementPomodoro();
