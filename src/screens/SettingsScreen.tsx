@@ -146,26 +146,6 @@ export const SettingsScreen: React.FC = () => {
           value={notificationsEnabled}
           onToggle={toggleNotifications}
         />
-        <ToggleRow
-          label="Messages de motivation IA"
-          subtitle="Messages personnalisés selon vos tâches"
-          value={motivationEnabled}
-          onToggle={toggleMotivation}
-        />
-
-        <View style={styles.card}>
-          <TouchableOpacity
-            style={styles.notifBtn}
-            onPress={notificationsEnabled ? handleScheduleNotifications : handleCancelNotifications}
-          >
-            <Text style={styles.notifBtnText}>
-              {notificationsEnabled ? '📲 Programmer les rappels' : '🔕 Annuler les rappels'}
-            </Text>
-          </TouchableOpacity>
-          <Text style={styles.notifHint}>
-            Les rappels sont envoyés toutes les 2h entre 9h et 19h.
-          </Text>
-        </View>
 
         {/* Pomodoro */}
         <Text style={[styles.sectionLabel, { marginTop: Spacing.xl }]}>FOCUS</Text>
