@@ -11,10 +11,10 @@ const MONTHS = [
 ];
 
 const RANKS = [
-  { emoji: '🕯️', name: 'Étincelle', days: 1, desc: 'Le voyage commence.' },
-  { emoji: '🔥', name: 'Flamme Ardente', days: 7, desc: 'La routine prend forme.' },
-  { emoji: '🌋', name: 'Inferno', days: 12, desc: 'Rien ne vous arrête.' },
-  { emoji: '⚡', name: 'Légende', days: 30, desc: 'Le rang ultime. Peu y accèdent.' },
+  { emoji: '🕯️', name: 'Étincelle', days: 7, desc: 'Le voyage commence.' },
+  { emoji: '🔥', name: 'Flamme Ardente', days: 30, desc: 'La routine prend forme.' },
+  { emoji: '🌋', name: 'Inferno', days: 90, desc: 'Rien ne vous arrête.' },
+  { emoji: '⚡', name: 'Légende', days: 365, desc: 'Le rang ultime. Peu y accèdent.' },
 ];
 
 const getCurrentRank = (streak: number) => {
