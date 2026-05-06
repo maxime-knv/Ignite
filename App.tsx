@@ -31,11 +31,12 @@ const TabIcon = ({
 }: {
   emoji: string; label: string; focused: boolean;
 }) => (
-  <View style={{ alignItems: 'center', gap: 2 }}>
+  <View style={{ alignItems: 'center', gap: 2, width: 50 }}>
     <Text style={{ fontSize: 20 }}>{emoji}</Text>
     <Text
+      numberOfLines={1}
       style={{
-        fontSize: 9,
+        fontSize: 10,
         color: focused ? Colors.flame : Colors.textMuted,
         fontWeight: focused ? '600' : '400',
       }}
@@ -94,7 +95,7 @@ export default function App() {
             component={TodayScreen}
             options={{
               tabBarIcon: ({ focused }) => (
-                <TabIcon emoji="📋" label="Aujourd'hui" focused={focused} />
+                <TabIcon emoji="🗒" label="Aujourd'hui" focused={focused} />
               ),
             }}
           />
@@ -103,7 +104,7 @@ export default function App() {
             component={FocusScreen}
             options={{
               tabBarIcon: ({ focused }) => (
-                <TabIcon emoji="⏱️" label="Focus" focused={focused} />
+                <TabIcon emoji="⏱" label="Focus" focused={focused} />
               ),
             }}
           />
