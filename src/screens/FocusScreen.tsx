@@ -36,7 +36,7 @@ import { Colors, Radius, Spacing, Typography } from '../theme';
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
-const WORK_DURATION  = 1 * 60;
+const WORK_DURATION  = 25 * 60;
 const SHORT_BREAK    =  5 * 60;
 const LONG_BREAK     = 15 * 60;
 const SESSIONS_TOTAL = 4;
