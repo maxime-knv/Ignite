@@ -106,7 +106,7 @@ Toutes les données — tâches, historique, séries, amis, préférences — so
 
 ```bash
 git clone git@github.com:maxime-knv/Ignite.git
-cd ignite-app
+cd Ignite
 npm install
 npx expo start
 ```
@@ -116,5 +116,5 @@ Scannez le QR code avec Expo Go (Android) ou l'app Appareil photo (iOS).
 ---
 
 ## Contributors
-maxime.kournikov@epitech.eu
-orion.prieto@epitech.eu
+- maxime.kournikov@epitech.eu
+- orion.prieto@epitech.eu
