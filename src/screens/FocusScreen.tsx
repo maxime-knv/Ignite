@@ -397,7 +397,7 @@ export const FocusScreen: React.FC = () => {
             onPress={handleToggle}
           >
             <Text style={styles.btnPrimaryText}>
-              {running ? '⏸ Pause' : isPaused ? '▶ Reprendre' : '▶ Démarrer'}
+              {running ? '▐▐ Pause' : isPaused ? '▶︎ Reprendre' : '▶ Démarrer'}
             </Text>
           </TouchableOpacity>
         </View>
